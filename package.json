@@ -4,11 +4,14 @@
   "description": "A simple CMS.",
   "main": "app.js",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "mongoose": "^4.4.12"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "script /dev/null foreman start -e var.env",
+    "mongo": "mongod --dbpath ~/mongo"
   },
   "repository": {
     "type": "git",

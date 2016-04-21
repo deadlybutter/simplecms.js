@@ -1,19 +1,19 @@
-module.exports = function(app, express, languageController, structureController) {
+module.exports = function(app, express, languageModule, structureModule) {
 
   app.use(function (req, res, next) {
     var headerLang = req['headers']['accept-language'];
-    req['simple_language'] = languageController.getLanguage(headerLang);
+    req['simple_language'] = languageModule.getLanguage(headerLang);
     next();
   });
 
-  var structures = structureController.getStructures();
+  var structures = structureModule.getStructures();
   Object.keys(structures).forEach(function(key) {
     var structure = structures[key];
     var prefix = '/' + structure.url_prefix;
 
     if (structure.custom_router) {
       var router = express.Router();
-      var routerPath = __dirname + '/../routers/' + structure.custom_router;console.log(routerPath);
+      var routerPath = __dirname + '/../routers/' + structure.custom_router;
       var routerModule = require(routerPath)(router);
       app.use(prefix, router);
     }
