@@ -38,23 +38,62 @@ var Content = mongoose.model('Content', {
   'fields': Array,
 });
 
-function mongoCallback(err, callback) {
+var types = {
+  "language": Language,
+  "Structure": Structure,
+  "FieldType": FieldType,
+  "Field": Field,
+  "Content": Content
+};
+
+function mongoCallback(err, obj, callback) {
   if (err) {
     console.error(err);
   }
-  callback();
+  callback(obj);
 }
 
-// var Cat = mongoose.model('Cat', { name: String });
-//
-// var kitty = new Cat({ name: 'Zildjian' });
-// kitty.save(function (err) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log('meow');
-//   }
-// });
+function saveObj(model, callback) {
+  model.save(function(err) {
+    mongoCallback(err, model, callback);
+  });
+}
+
+function newObj(type, data, save, callback) {
+  var model = types[type];
+
+  if (!model) {
+    callback();
+  }
+
+  var obj = new model(data);
+
+  if (!save) {
+    callback(obj);
+    return;
+  }
+
+  saveObj(obj, callback);
+}
+
+function getObj(type, one, query, callback) {
+  var model = types[type];
+
+  if (!model) {
+    callback();
+  }
+
+  if (one) {
+    model.where(query).findOne(function(err, obj) {
+      mongoCallback(err, obj, callback);
+    });
+  }
+  else {
+    model.where(query).find(function(err, obj) {
+      mongoCallback(err, obj, callback);
+    });
+  }
+}
 
 module.exports = function() {
 
@@ -62,6 +101,25 @@ module.exports = function() {
 
   mongoose.connect(process.env.MONGODB_URI);
 
+  module.getTypes = function() {
+    return types;
+  }
 
+  module.new = newObj;
+  module.save = saveObj;
+  module.get = getObj;
 
+  // newObj("language",{
+  //   'prefix': "en",
+  //   'full_name': "English",
+  //   'parent': "",
+  //   'default': true
+  // }, true, function(lang) {
+  //   console.log(lang);
+  // });
+  // getObj('language', false, {default: true}, function(lang) {
+  //   console.log(lang);
+  // });
+
+  return module;
 }
