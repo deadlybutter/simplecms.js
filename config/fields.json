@@ -1,0 +1,9 @@
+{
+  "simple_text": {
+    "human_name": "Paragraph",
+    "help_text": "A simple body of text.",
+    "value_type": "text",
+    "custom_styles": [],
+    "custom_scripts": []
+  }
+}

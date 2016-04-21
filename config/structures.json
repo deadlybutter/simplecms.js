@@ -1,0 +1,9 @@
+{
+  "admin": {
+    "url_prefix": "admin",
+    "fields": [],
+    "styles": ["simple_admin_styles"],
+    "scripts": ["simple_admin_scripts"],
+    "custom_router": ["simple_admin_router"]
+  }
+}

@@ -1,4 +1,4 @@
-var languages = require(__dirname + '/config/languages');
+var languages = require(__dirname + '/../config/languages');
 
 function getLanguage(langCode) {
   if (langCode == undefined) {
