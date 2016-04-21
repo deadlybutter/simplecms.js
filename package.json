@@ -1,0 +1,23 @@
+{
+  "name": "simplecms.js",
+  "version": "1.0.0",
+  "description": "A simple CMS.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deadlybutter/simplecms.js.git"
+  },
+  "author": "Joe Kent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deadlybutter/simplecms.js/issues"
+  },
+  "homepage": "https://github.com/deadlybutter/simplecms.js#readme"
+}
