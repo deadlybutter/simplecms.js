@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var schemas = {};
 
 var LanguageSchema = {
   'prefix': String,
@@ -10,54 +11,28 @@ var LanguageSchema = {
 var Language = mongoose.model('Language', LanguageSchema);
 
 var StructureSchema = {
-  'prefix': String,
+  'url_prefix': String,
   'human_name': String,
-  'starter_fields': Array,
+  'template': String,
   'styles': Array,
   'scripts': Array,
-  'custom_router': String
+  'custom_router': String,
+  'variables': Array
 };
 var Structure = mongoose.model('Structure', StructureSchema);
-
-var FieldTypeSchema = {
-  'machine_name': String,
-  'human_name': String,
-  'description': String,
-  'styles': Array,
-  'scripts': Array,
-};
-var FieldType = mongoose.model('FieldType', FieldTypeSchema);
-
-var FieldSchema = {
-  'type': String,
-  'parent': String,
-  'language': String,
-  'data': Schema.Types.Mixed
-};
-var Field = mongoose.model('Field', FieldTypeSchema);
 
 var ContentSchema = {
   'title': String,
   'url': String,
-  'fields': Array,
+  'variables': Array,
 };
 var Content = mongoose.model('Content', ContentSchema);
 
 var types = {
   "language": Language,
   "structure": Structure,
-  "fieldType": FieldType,
-  "field": Field,
   "content": Content
 };
-
-var schemas = {
-  "language": LanguageSchema,
-  "structure": StructureSchema,
-  "fieldType": FieldTypeSchema,
-  "field": FieldSchema,
-  "content": ContentSchema
-}
 
 function mongoCallback(err, obj, callback) {
   if (err) {
@@ -109,14 +84,21 @@ function getObj(type, one, query, callback) {
   }
 }
 
-function getParsableSchema(type) {
-  // make new blank OBJ
-  // for each thing in actual
-  // check if instance of X function
-  // add to new blank OBJ with string as value instead of function
-  // return new OBJ
-  return schemas[type];
-}
+// function parseScehma(type, schema) {
+//   schemas[type] = {};
+//   Object.keys(schema).forEach(function(element) {
+//     var item = "";
+//     switch(schema[element]) {
+//       case String: item = "string"; break;
+//       case Array: item = "array"; break;
+//     }
+//     schemas[type][element] = item;
+//   });
+// }
+//
+// function getParsableSchema(type) {
+//   return schemas[type];
+// }
 
 module.exports = function(ready) {
 
@@ -129,7 +111,7 @@ module.exports = function(ready) {
   module.new = newObj;
   module.save = saveObj;
   module.get = getObj;
-  module.getSchema = getSchema;
+  // module.getSchema = getParsableSchema;
 
   // newObj("language",{
   //   'prefix': "en",

@@ -5,8 +5,11 @@ module.exports = function(router, modules) {
   });
 
   router.get('/new/structure', function(req, res) {
-    res.json(modules.mongoModule.getParsableSchema('structure'));
-    // res.render('admin_structure', {});
+    res.render('admin_structure');
+  });
+
+  router.post('/new/structure', function(req, res) {
+
   });
 
   router.get('/new/content/', function(req, res) {
