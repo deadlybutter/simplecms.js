@@ -1,4 +1,6 @@
-var languages = require(__dirname + '/../config/languages');
+var db = {};
+
+var languages = {};
 
 function getLanguage(langCode) {
   if (langCode == undefined) {
@@ -22,11 +24,15 @@ function getLanguages() {
   return languages;
 }
 
-module.exports = function() {
+module.exports = function(databaseModule, ready) {
   var module = {};
 
   module.getLanguage = getLanguage;
   module.getLanguages = getLanguages;
 
-  return module;
+  db = databaseModule;
+  db.get('language', false, {}, function(langs) {
+    languages = langs;
+    ready(module);
+  });
 }

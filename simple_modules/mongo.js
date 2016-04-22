@@ -1,50 +1,63 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Language = mongoose.model('Language', {
+var LanguageSchema = {
   'prefix': String,
   'full_name': String,
   'parent': String,
   'default': Boolean
-});
+};
+var Language = mongoose.model('Language', LanguageSchema);
 
-var Structure = mongoose.model('Structure', {
+var StructureSchema = {
   'prefix': String,
   'human_name': String,
   'starter_fields': Array,
   'styles': Array,
   'scripts': Array,
   'custom_router': String
-});
+};
+var Structure = mongoose.model('Structure', StructureSchema);
 
-var FieldType = mongoose.model('FieldType', {
+var FieldTypeSchema = {
   'machine_name': String,
   'human_name': String,
   'description': String,
   'styles': Array,
   'scripts': Array,
-});
+};
+var FieldType = mongoose.model('FieldType', FieldTypeSchema);
 
-var Field = mongoose.model('Field', {
+var FieldSchema = {
   'type': String,
   'parent': String,
   'language': String,
   'data': Schema.Types.Mixed
-});
+};
+var Field = mongoose.model('Field', FieldTypeSchema);
 
-var Content = mongoose.model('Content', {
+var ContentSchema = {
   'title': String,
   'url': String,
   'fields': Array,
-});
+};
+var Content = mongoose.model('Content', ContentSchema);
 
 var types = {
   "language": Language,
-  "Structure": Structure,
-  "FieldType": FieldType,
-  "Field": Field,
-  "Content": Content
+  "structure": Structure,
+  "fieldType": FieldType,
+  "field": Field,
+  "content": Content
 };
+
+var schemas = {
+  "language": LanguageSchema,
+  "structure": StructureSchema,
+  "fieldType": FieldTypeSchema,
+  "field": FieldSchema,
+  "content": ContentSchema
+}
 
 function mongoCallback(err, obj, callback) {
   if (err) {
@@ -81,6 +94,7 @@ function getObj(type, one, query, callback) {
 
   if (!model) {
     callback();
+    return;
   }
 
   if (one) {
@@ -95,11 +109,18 @@ function getObj(type, one, query, callback) {
   }
 }
 
-module.exports = function() {
+function getParsableSchema(type) {
+  // make new blank OBJ
+  // for each thing in actual
+  // check if instance of X function
+  // add to new blank OBJ with string as value instead of function
+  // return new OBJ
+  return schemas[type];
+}
+
+module.exports = function(ready) {
 
   var module = {};
-
-  mongoose.connect(process.env.MONGODB_URI);
 
   module.getTypes = function() {
     return types;
@@ -108,6 +129,7 @@ module.exports = function() {
   module.new = newObj;
   module.save = saveObj;
   module.get = getObj;
+  module.getSchema = getSchema;
 
   // newObj("language",{
   //   'prefix': "en",
@@ -121,5 +143,8 @@ module.exports = function() {
   //   console.log(lang);
   // });
 
-  return module;
+  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connection.once('open', function() {
+    ready(module);
+  });
 }
