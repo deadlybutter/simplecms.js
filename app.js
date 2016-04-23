@@ -28,7 +28,7 @@ function startServer(directory) {
   app.set('views', [directory + '/views', __dirname + '/views']);
 
   // Setup admin router
-  router.customRouter('/admin', require(__dirname + '/router_admin'), application);
+  routerModule.customRouter('/admin', require(__dirname + '/router_admin'), application);
 
   // Start server
   var PORT = process.env.PORT || 5000;
