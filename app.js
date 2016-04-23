@@ -2,11 +2,22 @@ var express = require('express');
 var app = express();
 var exphbs = require('express-handlebars');
 
+// Simple CMS modules
+var router = require('router')(app, express);
+var structure = require('structure');
+
 function startServer(directory) {
+  // Parse settings
   if (!directory) {
     directory = __dirname + "/../../";
   }
 
+  // Create page structures
+  structure(directory + '/structures');
+  structure.parse();
+  structure.createPaths(router);
+
+  // Setup application
   app.engine('handlebars', exphbs({
     defaultLayout: 'main',
     partialsDir: [directory + '/views/partials'],
