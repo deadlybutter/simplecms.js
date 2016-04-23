@@ -7,7 +7,7 @@ function implementStructurePath(structure) {
 module.exports = function(app, express) {
   var module = {};
 
-  module.path = implementStructurePath(structure);
+  module.path = implementStructurePath;
 
   return module;
 }
