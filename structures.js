@@ -12,7 +12,7 @@ function parseStructures(structureDirectory) {
 
 function createStructurePaths(router) {
   structures.forEach(function(structure) {
-    implementStructurePath(structure);
+    router.path(structure);
   });
 }
 
