@@ -11,7 +11,7 @@ var application = {};
 function startServer(directory) {
   // Parse settings
   if (!directory) {
-    directory = __dirname + "/../../";
+    directory = __dirname + "/../..";
   }
 
   // Create page structures
