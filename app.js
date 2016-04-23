@@ -3,8 +3,8 @@ var app = express();
 var exphbs = require('express-handlebars');
 
 // Simple CMS modules
-var router = require('router')(app, express);
-var structure = require('structure');
+var router = require(__dirname + '/router')(app, express);
+var structure = require(__dirname + '/structure');
 
 function startServer(directory) {
   // Parse settings
