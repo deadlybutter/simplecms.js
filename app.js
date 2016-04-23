@@ -11,7 +11,8 @@ var application = {};
 function startServer(directory) {
   // Parse settings
   if (!directory) {
-    directory = __dirname + "/../..";
+    console.error("[simplecms.js] No directory specified, aborting!");
+    return;
   }
 
   // Create page structures
