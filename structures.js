@@ -20,7 +20,7 @@ function getStructures() {
     return structures;
 }
 
-module.exports = function(structureDirectory) {
+module.exports = function() {
   var module = {};
 
   module.parse = parseStructures;

@@ -4,7 +4,7 @@ var exphbs = require('express-handlebars');
 
 // Simple CMS modules
 var routerModule = require(__dirname + '/router')(app, express);
-var structureModule = require(__dirname + '/structures');
+var structureModule = require(__dirname + '/structures')();
 
 function startServer(directory) {
   // Parse settings
@@ -13,8 +13,7 @@ function startServer(directory) {
   }
 
   // Create page structures
-  structureModule(directory + '/structures');
-  structureModule.parse();
+  structureModule.parse(directory + '/structures');
   structureModule.createPaths(routerModule);
 
   // Setup application
