@@ -26,10 +26,14 @@ function startServer(directory) {
     helpers: {}
   }));
   app.set('view engine', 'handlebars');
-  app.set('views', [directory + '/views', __dirname + '/views']);
+  app.set('views', directory + '/views');
 
-  // Setup admin router
-  routerModule.customRouter('/admin', require(__dirname + '/router_admin'), application);
+  // Setup public files
+  app.use(express.static(directory + '/public'));
+  app.use(express.static(__dirname + '/public'));
+
+  // Setup API router
+  routerModule.customRouter('/api', require(__dirname + '/router_api'), application);
 
   // Start server
   var PORT = process.env.PORT || 5000;

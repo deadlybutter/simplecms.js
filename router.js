@@ -3,7 +3,7 @@ var express;
 
 function implementStructurePath(structure) {
   app.get(structure.url_prefix, function(req, res) {
-    res.json(structure);
+    res.render(structure.template, {});
   });
 }
 
