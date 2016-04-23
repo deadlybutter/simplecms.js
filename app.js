@@ -6,6 +6,8 @@ var exphbs = require('express-handlebars');
 var routerModule = require(__dirname + '/router')(app, express);
 var structureModule = require(__dirname + '/structures')();
 
+var application = {};
+
 function startServer(directory) {
   // Parse settings
   if (!directory) {
@@ -16,14 +18,19 @@ function startServer(directory) {
   structureModule.parse(directory + '/structures');
   structureModule.createPaths(routerModule);
 
-  // Setup application
+  // Setup templating
   app.engine('handlebars', exphbs({
     defaultLayout: 'main',
     partialsDir: [directory + '/views/partials'],
     helpers: {}
   }));
   app.set('view engine', 'handlebars');
+  app.set('views', [directory + '/views', __dirname + '/views']);
 
+  // Setup admin router
+  router.customRouter('/admin', require(__dirname + '/router_admin'), application);
+
+  // Start server
   var PORT = process.env.PORT || 5000;
   app.listen(PORT, function () {
     console.info(`simplecms.js listening on port ${PORT}`);
@@ -31,9 +38,7 @@ function startServer(directory) {
 }
 
 module.exports = function() {
-  var module = {};
+  application.start = startServer;
 
-  module.start = startServer;
-
-  return module;
+  return application;
 }
