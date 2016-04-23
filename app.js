@@ -21,5 +21,9 @@ function startServer(directory) {
 }
 
 module.exports = function() {
-  start: startServer
+  var module = {};
+
+  module.start = startServer;
+
+  return module;
 }
