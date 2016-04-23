@@ -10,27 +10,16 @@ var LanguageSchema = {
 };
 var Language = mongoose.model('Language', LanguageSchema);
 
-var StructureSchema = {
-  'url_prefix': String,
-  'human_name': String,
-  'template': String,
-  'styles': Array,
-  'scripts': Array,
-  'custom_router': String,
-  'variables': Array
-};
-var Structure = mongoose.model('Structure', StructureSchema);
-
 var ContentSchema = {
   'title': String,
   'url': String,
-  'variables': Array,
+  'structure': String,
+  'variables': Array
 };
 var Content = mongoose.model('Content', ContentSchema);
 
 var types = {
   "language": Language,
-  "structure": Structure,
   "content": Content
 };
 

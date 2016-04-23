@@ -4,19 +4,11 @@ module.exports = function(router, modules) {
     res.render('admin_home', {});
   });
 
-  router.get('/new/structure', function(req, res) {
-    res.render('admin_structure');
-  });
-
-  router.post('/new/structure', function(req, res) {
+  router.get('/content/new/:type', function(req, res) {
 
   });
 
-  router.get('/new/content/', function(req, res) {
-
-  });
-
-  router.get('/new/content/:type', function(req, res) {
+  router.post('/content/save/:type', function(req, res) {
 
   });
 

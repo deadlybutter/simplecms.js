@@ -21,10 +21,3 @@ require(__dirname + '/simple_modules/_loader')(app, express, function modulesLoa
   this.modules = mods;
   startServer();
 })
-
-/*
- * structure (page structure). entire HTML page (in the body) + scripts + styles. Also the path prefix.
- * define variables to be used in the HTML that can be replaced when creating content.
- *
- * content. container for all of the ^ variables in each defined language, plus path name and other shit.
- */
